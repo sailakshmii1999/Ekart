@@ -1,11 +1,17 @@
-FROM openjdk:8u151-jdk-alpine3.7
+# Use a base image with Java 17
+FROM openjdk:17-jdk-slim
 
+# Expose the port the application will run on
 EXPOSE 8070
 
-ENV APP_HOME /usr/src/app
+# Set the application home environment variable
+ENV APP_HOME=/usr/src/app
 
-COPY target/shopping-cart-0.0.1-SNAPSHOT.jar $APP_HOME/app.jar
-
+# Create the working directory
 WORKDIR $APP_HOME
 
-ENTRYPOINT exec java -jar app.jar
+# Copy the application JAR file into the container
+COPY target/shopping-cart-0.0.1-SNAPSHOT.jar app.jar
+
+# Set the entry point to run the application
+ENTRYPOINT ["java", "-jar", "app.jar"]
